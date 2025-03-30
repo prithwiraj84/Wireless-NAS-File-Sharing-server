@@ -47,6 +47,7 @@ void setup() {
   server.on("/list", HTTP_GET, listFiles);
   server.on("/upload", HTTP_POST, []() { server.send(200); }, handleFileUpload);
   server.on("/download", HTTP_GET, handleFileDownload);
+  server.on("/delete", HTTP_GET, handleFileDelete);
   server.on("/storage", HTTP_GET, handleStorageInfo);
   server.onNotFound(handleNotFound);
   server.begin();
@@ -82,12 +83,29 @@ void listFiles() {
   while (file) {
     String filename = String(file.name());
     page += "<tr><td>" + filename + "</td>";
-    page += "<td><a href='/download?file=" + filename + "'><button>Download</button></a></td></tr>";
+    page += "<td><a href='/download?file=" + filename + "'><button>Download</button></a> ";
+    page += "<button onclick=\"deleteFile('" + filename + "')\">Delete</button></td></tr>";
     file.close();
     file = root.openNextFile();
   }
   page += "</table><br><button onclick=\"location.href='/'\">Back</button>";
+  page += "<script>function deleteFile(filename){if(confirm('Are you sure?')){fetch('/delete?file='+encodeURIComponent(filename))";
+  page += ".then(response => response.text()).then(text => { alert(text); location.reload(); })";
+  page += ".catch(error => alert('Error deleting file!'));}}</script>";
   server.send(200, "text/html", page);
+}
+
+void handleFileDelete() {
+  String filename = server.arg("file");
+  if (filename.isEmpty()) {
+    server.send(400, "text/plain", "File not specified");
+    return;
+  }
+  if (SD.remove("/" + filename)) {
+    server.send(200, "text/plain", "File deleted successfully");
+  } else {
+    server.send(500, "text/plain", "Failed to delete file");
+  }
 }
 
 void handleFileDownload() {
