@@ -282,12 +282,22 @@
             
             <div class="media-grid">
                 <div class="media-box" style="grid-column: 1 / -1;"> 
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/z_vi_seD-0M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    <div class="media-info">
-                        <h3>Live NAS Demonstration</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Watch the role-based access control, admin console, and file management in action.</p>
-                    </div>
-                </div>
+    <div class="video-container" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <iframe 
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+            src="https://www.youtube.com/embed/z_vi_seD-0M" 
+            title="ESP32 SD Card NAS Demo" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    <div class="media-info">
+        <h3><i class="fas fa-play-circle" style="color: var(--danger);"></i> Live NAS Demonstration</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Watch the full walkthrough of the ESP32 NAS system: including the login portal, role-based file management (Admin vs. Viewer), and real-time system monitoring.
+        </p>
+    </div>
+</div>
                 <div class="media-box">
                     
                     <img src="login.jpeg" alt="NAS Login Screen" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;">
@@ -334,7 +344,4 @@
         });
     </script>
 </body>
-
 </html>
-
-
